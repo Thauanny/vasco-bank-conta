@@ -7,12 +7,12 @@ info:
 
 servers:
   - url: https://petstore3.swagger.io/api/v3
-  
 tags:
   - name:  contaCorrente
     description: Access to Petstore orders
 
 paths:
+
   /contaCorrente/{userId}:
     get:
       tags:
