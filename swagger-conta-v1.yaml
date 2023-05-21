@@ -197,6 +197,9 @@ components:
         eligivelAumentoLimite:
           type: boolean
           example: 'false'
+        virtual:
+          type: boolean
+          example: 'false'
       xml:
         name: cartaoCredito
    
