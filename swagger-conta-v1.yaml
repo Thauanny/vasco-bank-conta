@@ -205,7 +205,7 @@ components:
       type: oauth2
       flows:
         implicit:
-          authorizationUrl: https:/vasco-bank-conta/api/v1/oauth/authorize
+          authorizationUrl: https://vasco-bank-conta/api/v1/oauth/authorize
           scopes:
             write:pets: modify pets in your account
             read:pets: read your pets
