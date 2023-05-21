@@ -89,10 +89,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/contaCorrente'          
+                $ref: '#/components/schemas/extrato'          
             application/xml:
               schema:
-                $ref: '#/components/schemas/contaCorrente'
+                $ref: '#/components/schemas/extrato'
         '400':
           description: Invalid ID supplied
         '404':
@@ -152,15 +152,6 @@ components:
             $ref: '#/components/schemas/cartaoCredito'
       xml:
         name: contaCorrente
-    extrato:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 10
-      xml:
-        name: extrato
         
     saldo:
       type: object
@@ -171,6 +162,26 @@ components:
           example: 99.999
       xml:
         name: saldo
+        
+    extrato:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        dataOperacao:
+          type: string
+          format: date
+        operacao:
+          type: string
+          enum:
+            - PIX
+            - BOLETO
+            - INTRABANCO
+            - PAGCARTAO
+      xml:
+        name: extrato
         
     cartaoCredito:
       type: object
