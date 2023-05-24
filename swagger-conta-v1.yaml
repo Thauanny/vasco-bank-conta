@@ -68,6 +68,118 @@ paths:
                 $ref: '#/components/schemas/saldo'
         '405':
           description: Invalid input
+          
+  /contaCorrente/saldo:
+    post:
+      tags:
+        - contaCorrente
+      summary: Place an order for a pet
+      description: Place a new order in the store
+      operationId: saldo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/saldo'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/saldo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/saldo'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/saldo'
+        '405':
+          description: Invalid input
+          
+  /contaCorrente/{userId}/cheque/limite:
+    get:
+      tags:
+        - contaCorrente
+      summary: Place an order for a pet
+      description: Place a new order in the store
+      operationId: cheque
+      parameters:
+        - name: userId
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/saldo'
+        '405':
+          description: Invalid input
+          
+  /contaCorrente/cheque/limite:
+    post:
+      tags:
+        - contaCorrente
+      summary: Place an order for a pet
+      description: Place a new order in the store
+      operationId: chequepost
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/saldo'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/saldo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/saldo'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/saldo'
+        '405':
+          description: Invalid input
+
+    put:
+      tags:
+        - contaCorrente
+      summary: Place an order for a pet
+      description: Place a new order in the store
+      operationId: chequepust
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/saldo'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/saldo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/saldo'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/saldo'
+        '405':
+          description: Invalid input
+          
   /contaCorrente/{userId}/extrato:
     get:
       tags:
@@ -156,6 +268,9 @@ components:
     saldo:
       type: object
       properties:
+        idConta: 
+          type: integer
+          example: 1
         valor:
           type: number
           format: int64
