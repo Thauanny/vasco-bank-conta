@@ -119,7 +119,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/saldo'
+                $ref: '#/components/schemas/cheque'
         '405':
           description: Invalid input
           
@@ -289,6 +289,40 @@ components:
             $ref: '#/components/schemas/cartaoCredito'
       xml:
         name: contaCorrente
+        
+    cheque:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        valor:
+          type: number
+          example: 1000
+        valorExtenso:
+          type: string
+          example: 'mil reais'
+        dataAtual:
+          type: string
+          format: date
+        nome:
+          type: string
+          example: 'john'
+        numero:
+          type: string
+          example: '123123'
+        serie:
+          type: string
+          example: '123123'
+        dataEntrada:
+          type: string
+          format: date
+        conta: 
+          $ref: '#/components/schemas/contaCorrente'
+  
+      xml:
+        name: cheque
         
     saldo:
       type: object
