@@ -123,6 +123,31 @@ paths:
         '405':
           description: Invalid input
           
+  /contaCorrente/{userId}/cheque/juros:
+    get:
+      tags:
+        - contaCorrente
+      summary: Place an order for a pet
+      description: Place a new order in the store
+      operationId: chequejuros
+      parameters:
+        - name: userId
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/saldo'
+        '405':
+          description: Invalid input
+          
   /contaCorrente/cheque/limite:
     post:
       tags:
