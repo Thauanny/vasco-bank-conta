@@ -223,7 +223,7 @@ paths:
         '405':
           description: Invalid input
           
-  /contaCorrente/cheque/criar/{idConta}:
+  /contaCorrente/cheque/{idConta}:
     post:
       tags:
         - contaCorrente
