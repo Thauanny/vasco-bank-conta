@@ -222,10 +222,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/contaCorrente'          
+                $ref: '#/components/schemas/cheque'          
             application/xml:
               schema:
-                $ref: '#/components/schemas/contaCorrente'
+                $ref: '#/components/schemas/cheque'
         '400':
           description: Invalid ID supplied
         '404':
@@ -322,13 +322,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/saldo'
+              $ref: '#/components/schemas/cheque'
           application/xml:
             schema:
-              $ref: '#/components/schemas/saldo'
+              $ref: '#/components/schemas/cheque'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/saldo'
+              $ref: '#/components/schemas/cheque'
         required: true
       responses:
         '200':
@@ -336,7 +336,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/saldo'
+                $ref: '#/components/schemas/cheque'
         '405':
           description: Invalid input
           
@@ -477,7 +477,7 @@ components:
           example: '23232-3'
         dataNascimento:
           type: string
-          format: date
+          example: "2023-06-06"
         cpf:
           type: string
           example: '999.999.999-99'
@@ -527,7 +527,7 @@ components:
           example: '23232-3'
         dataNascimento:
           type: string
-          format: date
+          example: "2023-06-06"
         cpf:
           type: string
           example: '999.999.999-99'
@@ -557,12 +557,18 @@ components:
         valor:
           type: number
           example: 1000
+        limite:
+          type: number
+          example: 1000
+        juros:
+          type: number
+          example: 1000
         valorExtenso:
           type: string
           example: 'mil reais'
         dataAtual:
           type: string
-          format: date
+          example: "2023-06-06"
         nome:
           type: string
           example: 'john'
@@ -574,7 +580,7 @@ components:
           example: '123123'
         dataEntrada:
           type: string
-          format: date
+          example: "2023-06-06"
   
       xml:
         name: cheque
@@ -610,7 +616,7 @@ components:
           example: 10
         dataOperacao:
           type: string
-          format: date
+          example: "2023-06-06"
         operacao:
           type: string
           enum:
