@@ -21,7 +21,7 @@ public class ChequeController {
     // @Autowired
     // private ChequeService chequeService;
 
-    @PostMapping("/criar/{idConta}")
+    @PostMapping("/{idConta}")
     public ResponseEntity<?> cadastrarCheque(@PathVariable Integer idConta, @RequestBody Cheque cheque) {
         try {
             // chamada service
