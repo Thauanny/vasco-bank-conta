@@ -12,7 +12,51 @@ tags:
 
 paths:
 
-  /contaCorrente/{userId}:
+  /contaCorrente/criar/{idUser}:
+    post:
+      tags:
+        - contaCorrente
+      summary: Criação da conta
+      description: Returns um map da conta corrente do usuario
+      operationId: postContaCorrente
+      parameters:
+        - name: idUser
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/contaCorrenteCriar'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/contaCorrenteCriar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/contaCorrenteCriar'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contaCorrenteCriar'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/contaCorrenteCriar'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: conta not found
+      security:
+        - api_key: []
+       
+  /contaCorrente/{idUser}:
     get:
       tags:
         - contaCorrente
@@ -20,7 +64,7 @@ paths:
       description: Returns um map da conta corrente do usuario
       operationId: getContaCorrentById
       parameters:
-        - name: userId
+        - name: idUser
           in: path
           description: ID do usuario
           required: true
@@ -43,15 +87,16 @@ paths:
           description: conta not found
       security:
         - api_key: []
-  /contaCorrente/{userId}/saldo:
+        
+  /contaCorrente/saldo/{idConta}:
     get:
       tags:
         - contaCorrente
-      summary: Place an order for a pet
+      summary: Retorna o saldo da conta
       description: Place a new order in the store
-      operationId: placeOrder
+      operationId: getSaldo
       parameters:
-        - name: userId
+        - name: idConta
           in: path
           description: ID do usuario
           required: true
@@ -69,13 +114,20 @@ paths:
         '405':
           description: Invalid input
           
-  /contaCorrente/saldo:
-    post:
+    put:
       tags:
         - contaCorrente
-      summary: Place an order for a pet
+      summary: Atualiza o saldo da conta
       description: Place a new order in the store
-      operationId: saldo
+      operationId: putSaldosaldo
+      parameters:
+        - name: idConta
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         content:
           application/json:
@@ -98,15 +150,66 @@ paths:
         '405':
           description: Invalid input
           
-  /contaCorrente/{userId}/cheque/limite:
+  /contaCorrente/cheque/criar/{idConta}:
+    post:
+      tags:
+        - contaCorrente
+      summary: Cria um cheque na conta
+      description: Returns um map da conta corrente do usuario
+      operationId: postCheque
+      parameters:
+        - name: idConta
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/cheque'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/cheque'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/cheque'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contaCorrente'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/contaCorrente'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: conta not found
+      security:
+        - api_key: []
+        
+  /contaCorrente/cheque/{idConta}/{idCheque}:
     get:
       tags:
         - contaCorrente
-      summary: Place an order for a pet
-      description: Place a new order in the store
-      operationId: cheque
+      summary: Retorna o cheque da conta
+      description: Returns um map da conta corrente do usuario
+      operationId: getCheque
       parameters:
-        - name: userId
+        - name: idConta
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: idCheque
           in: path
           description: ID do usuario
           required: true
@@ -119,19 +222,140 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/cheque'
-        '405':
-          description: Invalid input
-          
-  /contaCorrente/{userId}/cheque/juros:
+                $ref: '#/components/schemas/contaCorrente'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/contaCorrente'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: conta not found
+      security:
+        - api_key: []
+        
+  /contaCorrente/cheque/all/{idConta}:
     get:
       tags:
         - contaCorrente
-      summary: Place an order for a pet
+      summary: Retorna todos os cheques da conta
+      description: Returns um map da conta corrente do usuario
+      operationId: getCheques
+      parameters:
+        - name: idConta
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/cheques'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/cheques'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: conta not found
+      security:
+        - api_key: []
+          
+  /contaCorrente/cheque/{idConta}/{idCheque}/limite:
+    get:
+      tags:
+        - contaCorrente
+      summary: retorna o limite do cheque da conta
+      description: Place a new order in the store
+      operationId: getChequeLimite
+      parameters:
+        - name: idCheque
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: idConta
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/saldo'
+        '405':
+          description: Invalid input
+    put:
+      tags:
+        - contaCorrente
+      summary: Atualiza o limite do cheque da conta
+      description: Place a new order in the store
+      operationId: chequepust
+      parameters:
+        - name: idCheque
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: idConta
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/saldo'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/saldo'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/saldo'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/saldo'
+        '405':
+          description: Invalid input
+          
+  /contaCorrente/cheque/{idConta}/{idCheque}/juros:
+    get:
+      tags:
+        - contaCorrente
+      summary: Retorna os juros do cheque da conta
       description: Place a new order in the store
       operationId: chequejuros
       parameters:
-        - name: userId
+        - name: idCheque
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: idConta
           in: path
           description: ID do usuario
           required: true
@@ -148,41 +372,28 @@ paths:
         '405':
           description: Invalid input
           
-  /contaCorrente/cheque/limite:
-    post:
-      tags:
-        - contaCorrente
-      summary: Place an order for a pet
-      description: Place a new order in the store
-      operationId: chequepost
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/saldo'
-          application/xml:
-            schema:
-              $ref: '#/components/schemas/saldo'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/saldo'
-        required: true
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/saldo'
-        '405':
-          description: Invalid input
 
     put:
       tags:
         - contaCorrente
-      summary: Place an order for a pet
+      summary: Atualiza os juros do cheque da conta
       description: Place a new order in the store
-      operationId: chequepust
+      operationId: chequeput
+      parameters:
+        - name: idCheque
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: idConta
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
       requestBody:
         content:
           application/json:
@@ -205,15 +416,15 @@ paths:
         '405':
           description: Invalid input
           
-  /contaCorrente/{userId}/extrato:
+  /contaCorrente/extrato/{idConta}:
     get:
       tags:
         - contaCorrente
-      summary: Find purchase order by ID
+      summary: retorna o extrato da conta
       description: For valid response try integer IDs with value <= 5 or > 10. Other values will generate exceptions.
       operationId: getOrderById
       parameters:
-        - name: userId
+        - name: idConta
           in: path
           description: ID of order that needs to be fetched
           required: true
@@ -279,17 +490,63 @@ components:
         saldo:
           type: number
           example: 0
-        #extrato: 
-          #$ref: '#/components/schemas/extrato'
-        cartoes:
+        cheque:
           type: array
           xml:
             wrapped: true
           items:
-            $ref: '#/components/schemas/cartaoCredito'
+            $ref: '#/components/schemas/cheque'
       xml:
         name: contaCorrente
-        
+
+
+    contaCorrenteCriar:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        nome:
+          type: string
+          example: 'John pascal'
+        primeiroNome:
+          type: string
+          example: 'John'
+        agencia:
+          type: string
+          example: '1232'
+        numero:
+          type: string
+          example: '23232'
+        digito:
+          type: string
+          example: '3'
+        numeroComDigito:
+          type: string
+          example: '23232-3'
+        dataNascimento:
+          type: string
+          format: date
+        cpf:
+          type: string
+          example: '999.999.999-99'
+        profissao:
+          type: string
+          example: 'Desenvolvedor'
+        elegivelCredito:
+          type: boolean
+          example: 'false'
+        saldo:
+          type: number
+          example: 0
+        cheque:
+          type: array
+          nullable: true
+          items: 
+            $ref: '#/components/schemas/cheque'
+      xml:
+        name: contaCorrenteCriar        
     cheque:
       type: object
       properties:
@@ -318,18 +575,25 @@ components:
         dataEntrada:
           type: string
           format: date
-        conta: 
-          $ref: '#/components/schemas/contaCorrente'
   
       xml:
         name: cheque
         
+    cheques:
+      type: object
+      properties:
+        cheques:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/cheque'
+      xml:
+        name: cheques
+        
     saldo:
       type: object
       properties:
-        idConta: 
-          type: integer
-          example: 1
         valor:
           type: number
           format: int64
@@ -357,36 +621,6 @@ components:
       xml:
         name: extrato
         
-    cartaoCredito:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int64
-          example: 10
-        nome:
-          type: string
-          example: 'John K. pascal'
-        numero:
-          type: string
-          example: '1234 1232 1234 1232'
-        dataVencimento:
-          type: string
-          format: date
-        cvv:
-          type: string
-          example: '123'
-        limite:
-          type: number
-          example: 9.999
-        eligivelAumentoLimite:
-          type: boolean
-          example: 'false'
-        virtual:
-          type: boolean
-          example: 'false'
-      xml:
-        name: cartaoCredito
    
   securitySchemes:
     petstore_auth:
