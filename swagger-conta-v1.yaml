@@ -12,7 +12,7 @@ tags:
 
 paths:
 
-  /contaCorrente/criar/{idUser}:
+  /contaCorrente/{idUser}:
     post:
       tags:
         - contaCorrente
@@ -55,9 +55,82 @@ paths:
           description: conta not found
       security:
         - api_key: []
-       
-  /contaCorrente/{idUser}:
+        
+    put:
+      tags:
+        - contaCorrente
+      summary: Criação da conta
+      description: Returns um map da conta corrente do usuario
+      operationId: putContaCorrente
+      parameters:
+        - name: idUser
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/contaCorrenteCriar'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/contaCorrenteCriar'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/contaCorrenteCriar'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contaCorrenteCriar'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/contaCorrenteCriar'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: conta not found
+      security:
+        - api_key: []
+
     get:
+      tags:
+        - contaCorrente
+      summary: Retorna a conta corrente do usuario
+      description: Returns um map da conta corrente do usuario
+      operationId: getContaCorrentById
+      parameters:
+        - name: idUser
+          in: path
+          description: ID do usuario
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/contaCorrente'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/contaCorrente'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: conta not found
+      security:
+        - api_key: []
+        
+    delete:
       tags:
         - contaCorrente
       summary: Retorna a conta corrente do usuario
