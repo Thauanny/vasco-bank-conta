@@ -3,6 +3,25 @@ package com.vascobancoconta.vascobancocontaarti.models;
 public class Cheque {
     Integer id;
     Double valor;
+    Double limite;
+    Double juros;
+
+    public Double getLimite() {
+        return limite;
+    }
+
+    public void setLimite(Double limite) {
+        this.limite = limite;
+    }
+
+    public Double getJuros() {
+        return juros;
+    }
+
+    public void setJuros(Double juros) {
+        this.juros = juros;
+    }
+
     String valorExtenso;
     String dataAtual;
     String nome;
