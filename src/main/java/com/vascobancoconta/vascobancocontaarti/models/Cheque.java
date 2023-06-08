@@ -1,95 +1,54 @@
 package com.vascobancoconta.vascobancocontaarti.models;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import jakarta.persistence.ForeignKey;
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "cheque")
+@Getter
+@Setter
 public class Cheque {
-    Integer id;
-    Double valor;
-    Double limite;
-    Double juros;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "cheque_id")
+    private Integer id;
+    @Column(name = "valoe")
+    private double valor;
+    @Column(name = "limite")
+    private double limite;
+    @Column(name = "juros")
+    private double juros;
+    @Column(name = "valor_extenso")
+    private String valorExtenso;
+    @Column(name = "data_atual")
+    private String dataAtual;
+    @Column(name = "nome")
+    private String nome;
+    @Column(name = "numero")
+    private String numero;
+    @Column(name = "serie")
+    private String serie;
+    @Column(name = "data_entrada")
+    private String dataEntrada;
+    @ManyToOne
+    @JoinColumn(name="conta_id")
+    public Conta conta;
+   
 
-    public Double getLimite() {
-        return limite;
-    }
-
-    public void setLimite(Double limite) {
-        this.limite = limite;
-    }
-
-    public Double getJuros() {
-        return juros;
-    }
-
-    public void setJuros(Double juros) {
-        this.juros = juros;
-    }
-
-    String valorExtenso;
-    String dataAtual;
-    String nome;
-    String numero;
-    String serie;
-    String dataEntrada;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Double getValor() {
-        return valor;
-    }
-
-    public void setValor(Double valor) {
-        this.valor = valor;
-    }
-
-    public String getValorExtenso() {
-        return valorExtenso;
-    }
-
-    public void setValorExtenso(String valorExtenso) {
-        this.valorExtenso = valorExtenso;
-    }
-
-    public String getDataAtual() {
-        return dataAtual;
-    }
-
-    public void setDataAtual(String dataAtual) {
-        this.dataAtual = dataAtual;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getSerie() {
-        return serie;
-    }
-
-    public void setSerie(String serie) {
-        this.serie = serie;
-    }
-
-    public String getDataEntrada() {
-        return dataEntrada;
-    }
-
-    public void setDataEntrada(String dataEntrada) {
-        this.dataEntrada = dataEntrada;
-    }
 }

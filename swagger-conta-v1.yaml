@@ -135,7 +135,7 @@ paths:
         - contaCorrente
       summary: Retorna a conta corrente do usuario
       description: Returns um map da conta corrente do usuario
-      operationId: getContaCorrentById
+      operationId: deleteContaCorrentById
       parameters:
         - name: idUser
           in: path
