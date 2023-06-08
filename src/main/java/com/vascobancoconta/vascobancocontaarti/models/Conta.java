@@ -46,7 +46,7 @@ public class Conta {
     private boolean elegivelCredito;
     @Column(name = "saldo")
     private double saldo;
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     public List<Cheque> cheques;
 
 }

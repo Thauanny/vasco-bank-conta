@@ -72,7 +72,6 @@ public class ContaController {
     @GetMapping("/saldo/{idConta}")
     public ResponseEntity<?> saldo(@PathVariable Integer idConta) {
         try {
-
             return ResponseEntity.ok("{\"valor\":" + contaService.saldo(idConta) + "}");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -92,5 +91,4 @@ public class ContaController {
         }
     }
 
-    
 }

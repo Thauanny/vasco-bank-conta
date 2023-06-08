@@ -11,11 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
 import com.vascobancoconta.vascobancocontaarti.models.Cheque;
 import com.vascobancoconta.vascobancocontaarti.service.ChequeService;
-
-
 
 @RestController
 @RequestMapping(value = "/contaCorrente/cheque")
@@ -26,11 +23,10 @@ public class ChequeController {
     @PostMapping("/{idConta}")
     public ResponseEntity<?> cadastrarCheque(@PathVariable Integer idConta, @RequestBody Cheque cheque) {
         try {
-       
-            
+
             return ResponseEntity.ok(chequeService.cadastrarCheque(cheque));
         } catch (Exception e) {
-            //enviar log
+            // enviar log
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"message\": \"Nao foi possivel cadastrar\"}");
         }
@@ -40,17 +36,18 @@ public class ChequeController {
     public ResponseEntity<?> cheques(@PathVariable Integer idConta) {
         try {
 
-            return ResponseEntity.ok(            chequeService.cheques());
+            return ResponseEntity.ok(chequeService.cheques());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
     }
+
     @GetMapping("/{idCheque}")
-    public ResponseEntity<?> cheque( @PathVariable Integer idCheque) {
+    public ResponseEntity<?> cheque(@PathVariable Integer idCheque) {
         try {
-       
-            return ResponseEntity.ok( chequeService.cheque(idCheque));
+
+            return ResponseEntity.ok(chequeService.cheque(idCheque));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
@@ -60,8 +57,8 @@ public class ChequeController {
     @GetMapping("/{idCheque}/limite")
     public ResponseEntity<?> limite(@PathVariable Integer idCheque) {
         try {
-           
-            return ResponseEntity.ok( chequeService.limite(idCheque));
+
+            return ResponseEntity.ok(chequeService.limite(idCheque));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
@@ -71,7 +68,7 @@ public class ChequeController {
     @PutMapping("/limite")
     public ResponseEntity<?> limite(@RequestBody Cheque cheque) {
         try {
-            return ResponseEntity.ok( chequeService.atualizarlimite(cheque));
+            return ResponseEntity.ok(chequeService.atualizarlimite(cheque));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");

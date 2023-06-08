@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
 import java.time.YearMonth;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,21 +21,21 @@ public class ExtratoService {
     @Autowired
     private ExtratoRepository extratoRepository;
 
-
-    
-    public Extrato extratoDia(Integer idConta){
-        return new Extrato();
-       // return extratoRepository.extratoDia(idConta, LocalDate.now().getDayOfMonth());
+    public List<Extrato> extratoDia(Integer idConta) {
+        return List.of(new Extrato());
+        // return extratoRepository.extratoDia(idConta,
+        // LocalDate.now().getDayOfMonth());
 
     }
 
-    public Extrato extratoMes(Integer idConta){
-        return new Extrato();
-        //return extratoRepository.extratoMes(idConta, LocalDate.now().getMonthValue());
+    public List<Extrato> extratoMes(Integer idConta) {
+        return List.of(new Extrato());
+        // return extratoRepository.extratoMes(idConta,
+        // LocalDate.now().getMonthValue());
     }
 
-    public Extrato extratoAno(Integer idConta){
-        return new Extrato();
-       // return extratoRepository.extratoDia(idConta, LocalDate.now().getYear());
+    public List<Extrato> extratoAno(Integer idConta) {
+        return List.of(new Extrato());
+        // return extratoRepository.extratoDia(idConta, LocalDate.now().getYear());
     }
 }

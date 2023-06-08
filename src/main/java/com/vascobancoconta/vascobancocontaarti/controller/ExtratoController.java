@@ -22,13 +22,9 @@ public class ExtratoController {
         try {
             switch (intervalo) {
                 case DIA:
-
                     return ResponseEntity.ok(extratoService.extratoDia(idConta));
-
                 case MES:
-
                     return ResponseEntity.ok(extratoService.extratoMes(idConta));
-
                 default:
                     return ResponseEntity.ok(extratoService.extratoAno(idConta));
             }
