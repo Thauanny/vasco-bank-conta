@@ -8,8 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,8 +44,8 @@ public class Cheque {
     private String serie;
     @Column(name = "data_entrada")
     private String dataEntrada;
-    @ManyToOne
-    @JoinColumn(name="conta_id")
+    @ManyToOne(cascade=CascadeType.ALL)
+    @JoinColumn(name="conta_id", referencedColumnName = "conta_id", foreignKey = @ForeignKey(name = "fk_conta_id"))
     public Conta conta;
    
 

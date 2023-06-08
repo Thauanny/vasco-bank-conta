@@ -267,7 +267,7 @@ paths:
       security:
         - api_key: []
         
-  /contaCorrente/cheque/{idConta}/{idCheque}:
+  /contaCorrente/cheque/{idCheque}:
     get:
       tags:
         - contaCorrente
@@ -275,13 +275,6 @@ paths:
       description: Returns um map da conta corrente do usuario
       operationId: getCheque
       parameters:
-        - name: idConta
-          in: path
-          description: ID do usuario
-          required: true
-          schema:
-            type: integer
-            format: int64
         - name: idCheque
           in: path
           description: ID do usuario
@@ -339,7 +332,7 @@ paths:
       security:
         - api_key: []
           
-  /contaCorrente/cheque/{idConta}/{idCheque}/limite:
+  /contaCorrente/cheque/{idCheque}/limite:
     get:
       tags:
         - contaCorrente
@@ -348,13 +341,6 @@ paths:
       operationId: getChequeLimite
       parameters:
         - name: idCheque
-          in: path
-          description: ID do usuario
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: idConta
           in: path
           description: ID do usuario
           required: true
@@ -384,13 +370,6 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: idConta
-          in: path
-          description: ID do usuario
-          required: true
-          schema:
-            type: integer
-            format: int64
       requestBody:
         content:
           application/json:
@@ -413,7 +392,7 @@ paths:
         '405':
           description: Invalid input
           
-  /contaCorrente/cheque/{idConta}/{idCheque}/juros:
+  /contaCorrente/cheque/{idCheque}/juros:
     get:
       tags:
         - contaCorrente
@@ -422,13 +401,6 @@ paths:
       operationId: chequejuros
       parameters:
         - name: idCheque
-          in: path
-          description: ID do usuario
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: idConta
           in: path
           description: ID do usuario
           required: true
@@ -460,13 +432,6 @@ paths:
           schema:
             type: integer
             format: int64
-        - name: idConta
-          in: path
-          description: ID do usuario
-          required: true
-          schema:
-            type: integer
-            format: int64
       requestBody:
         content:
           application/json:
@@ -489,7 +454,7 @@ paths:
         '405':
           description: Invalid input
           
-  /contaCorrente/extrato/{idConta}:
+  /contaCorrente/extrato/{idConta}/{intervalo}:
     get:
       tags:
         - contaCorrente
@@ -499,11 +464,22 @@ paths:
       parameters:
         - name: idConta
           in: path
-          description: ID of order that needs to be fetched
+          description: ID da conta
           required: true
           schema:
             type: integer
             format: int64
+        - name: intervalo
+          in: path
+          description: enum para intervalo entre os extratos
+          required: true
+          schema:
+            type: string
+            enum:
+              - DIA
+              - MES
+              - ANO
+         
       responses:
         '200':
           description: successful operation
@@ -518,6 +494,8 @@ paths:
           description: Invalid ID supplied
         '404':
           description: Order not found
+          
+  
 
  
     
