@@ -44,8 +44,7 @@ public class Cheque {
     private String serie;
     @Column(name = "data_entrada")
     private String dataEntrada;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "conta_id", referencedColumnName = "conta_id", foreignKey = @ForeignKey(name = "fk_conta_id"))
-    public Conta conta;
+    @Column(name = "conta_id")
+    public Integer idConta;
 
 }

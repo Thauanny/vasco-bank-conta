@@ -25,6 +25,8 @@ public class ContaController {
     @PostMapping("/{idUser}")
     public ResponseEntity<?> cadastrarConta(@PathVariable Integer idUser, @RequestBody Conta conta) {
         try {
+            //verificar se existe user
+            conta.setIdUser(idUser);
             return ResponseEntity.ok(contaService.cadastrarConta(conta));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -33,9 +35,12 @@ public class ContaController {
 
     }
 
-    @PutMapping("/{idUser}")
-    public ResponseEntity<?> atualizarConta(@PathVariable Integer idUser, @RequestBody Conta conta) {
+    @PutMapping("/{idConta}")
+    public ResponseEntity<?> atualizarConta(@PathVariable Integer idConta, @RequestBody Conta conta) {
         try {
+            if (contaService.retornarConta(idConta) == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
             return ResponseEntity.ok(contaService.atualizarConta(conta));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -47,9 +52,10 @@ public class ContaController {
     @GetMapping("/{idConta}")
     public ResponseEntity<?> conta(@PathVariable Integer idConta) {
         try {
-            // chamada service
-
-            return ResponseEntity.ok(contaService.conta(idConta));
+            if (contaService.retornarConta(idConta) == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
+            return ResponseEntity.ok(contaService.retornarConta(idConta));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
@@ -60,6 +66,9 @@ public class ContaController {
     @DeleteMapping("/{idConta}")
     public ResponseEntity<?> deleteConta(@PathVariable Integer idConta) {
         try {
+            if (contaService.retornarConta(idConta) == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
             contaService.deleteConta(idConta);
             return ResponseEntity.ok("{\"message\": \"Conta excluida\"}");
         } catch (Exception e) {
@@ -72,6 +81,9 @@ public class ContaController {
     @GetMapping("/saldo/{idConta}")
     public ResponseEntity<?> saldo(@PathVariable Integer idConta) {
         try {
+            if (contaService.retornarConta(idConta) == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
             return ResponseEntity.ok("{\"valor\":" + contaService.saldo(idConta) + "}");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -83,7 +95,9 @@ public class ContaController {
     @PutMapping("/saldo/{idConta}")
     public ResponseEntity<?> saldo(@PathVariable Integer idConta, @RequestBody double saldo) {
         try {
-
+            if (contaService.retornarConta(idConta) == null)
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
             return ResponseEntity.ok("{\"valor\":" + contaService.atualizarSaldo(idConta, saldo).getSaldo() + "}");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

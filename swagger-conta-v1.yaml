@@ -541,12 +541,6 @@ components:
         saldo:
           type: number
           example: 0
-        cheque:
-          type: array
-          xml:
-            wrapped: true
-          items:
-            $ref: '#/components/schemas/cheque'
       xml:
         name: contaCorrente
 
@@ -591,11 +585,6 @@ components:
         saldo:
           type: number
           example: 0
-        cheque:
-          type: array
-          nullable: true
-          items: 
-            $ref: '#/components/schemas/cheque'
       xml:
         name: contaCorrenteCriar        
     cheque:

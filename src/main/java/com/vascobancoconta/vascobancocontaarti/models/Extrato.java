@@ -38,8 +38,7 @@ public class Extrato {
     @Enumerated(EnumType.STRING)
     @Column(name = "operacao")
     private OPERACAO operacao;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "conta_id", referencedColumnName = "conta_id", foreignKey = @ForeignKey(name = "fk_conta_id"))
-    private Conta contaId;
+    @Column(name = "conta_id")
+    private Integer idConta;
 
 }

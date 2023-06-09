@@ -8,12 +8,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import jakarta.persistence.ForeignKey;
 
 @Entity
 @AllArgsConstructor
@@ -26,6 +28,8 @@ public class Conta {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "conta_id")
     private Integer id;
+    @Column(name = "user_id")
+    private Integer idUser;
     @Column(name = "nome")
     private String nome;
     @Column(name = "primeiro_nome")
@@ -46,7 +50,5 @@ public class Conta {
     private boolean elegivelCredito;
     @Column(name = "saldo")
     private double saldo;
-    @OneToMany(cascade = CascadeType.ALL)
-    public List<Cheque> cheques;
 
 }

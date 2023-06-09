@@ -19,7 +19,6 @@ public class ContaService {
     public Conta atualizarConta(Conta conta) {
         Conta _conta = contaRepository.findById(conta.getId()).get();
         _conta.setAgencia(conta.getAgencia());
-        _conta.setCheques(conta.getCheques());
         _conta.setCpf(conta.getCpf());
         _conta.setDigito(conta.getDigito());
         _conta.setNome(conta.getNome());
@@ -31,8 +30,8 @@ public class ContaService {
         return contaRepository.save(_conta);
     }
 
-    public Conta conta(Integer idConta) {
-        return contaRepository.findById(idConta).get();
+    public Conta retornarConta(Integer userId) {
+        return contaRepository.retornarConta(userId);
     }
 
     public void deleteConta(Integer idConta) {

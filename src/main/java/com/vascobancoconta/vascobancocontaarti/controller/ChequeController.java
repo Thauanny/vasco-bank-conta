@@ -13,22 +13,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.vascobancoconta.vascobancocontaarti.models.Cheque;
 import com.vascobancoconta.vascobancocontaarti.service.ChequeService;
+import com.vascobancoconta.vascobancocontaarti.service.ContaService;
 
 @RestController
 @RequestMapping(value = "/contaCorrente/cheque")
 public class ChequeController {
     @Autowired
     private ChequeService chequeService;
+    @Autowired
+    private ContaService contaService;
 
     @PostMapping("/{idConta}")
     public ResponseEntity<?> cadastrarCheque(@PathVariable Integer idConta, @RequestBody Cheque cheque) {
         try {
-
-            return ResponseEntity.ok(chequeService.cadastrarCheque(cheque));
+            if (contaService.retornarConta(idConta) == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Usuario nao encontrado\"}");
+            cheque.setIdConta(idConta);
+            return ResponseEntity.status(HttpStatus.CREATED).body(chequeService.cadastrarCheque(cheque));
         } catch (Exception e) {
             // enviar log
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body("{\"message\": \"Nao foi possivel cadastrar\"}");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"status\": \"500 \", message\": \"Nao foi possivel cadastrar\"}");
         }
     }
 
@@ -36,9 +42,12 @@ public class ChequeController {
     public ResponseEntity<?> cheques(@PathVariable Integer idConta) {
         try {
 
-            return ResponseEntity.ok(chequeService.cheques());
+            if (contaService.retornarConta(idConta) == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Usuario nao encontrado\"}");
+            return ResponseEntity.status(HttpStatus.OK).body(chequeService.retornarCheques(idConta));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
     }
@@ -47,9 +56,12 @@ public class ChequeController {
     public ResponseEntity<?> cheque(@PathVariable Integer idCheque) {
         try {
 
-            return ResponseEntity.ok(chequeService.cheque(idCheque));
+            if (chequeService.retornarCheque(idCheque) == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Cheque nao encontrado\"}");
+            return ResponseEntity.ok(chequeService.retornarCheque(idCheque));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
     }
@@ -57,10 +69,13 @@ public class ChequeController {
     @GetMapping("/{idCheque}/limite")
     public ResponseEntity<?> limite(@PathVariable Integer idCheque) {
         try {
+            if (chequeService.retornarCheque(idCheque) == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Cheque nao encontrado\"}");
 
             return ResponseEntity.ok(chequeService.limite(idCheque));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
     }
@@ -68,6 +83,9 @@ public class ChequeController {
     @PutMapping("/limite")
     public ResponseEntity<?> limite(@RequestBody Cheque cheque) {
         try {
+            if (chequeService.retornarCheque(cheque.getId()) == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Cheque nao encontrado\"}");
             return ResponseEntity.ok(chequeService.atualizarlimite(cheque));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -78,6 +96,9 @@ public class ChequeController {
     @GetMapping("/{idCheque}/juros")
     public ResponseEntity<?> juros(@PathVariable Integer idCheque) {
         try {
+            if (chequeService.retornarCheque(idCheque) == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Cheque nao encontrado\"}");
             return ResponseEntity.ok("{\"valor\":" + chequeService.limite(idCheque) + "}");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
@@ -88,6 +109,9 @@ public class ChequeController {
     @PutMapping("/juros")
     public ResponseEntity<?> juros(@RequestBody Cheque cheque) {
         try {
+            if (chequeService.retornarCheque(cheque.getId()) == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Cheque nao encontrado\"}");
             return ResponseEntity.ok(chequeService.atualizarJuros(cheque));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)

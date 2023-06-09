@@ -17,12 +17,12 @@ public class ChequeService {
         return ChequeRepository.save(cheque);
     }
 
-    public List<Cheque> cheques() {
-        return List.of(new Cheque());
-        // return ChequeRepository.cheques();
+    public List<Cheque> retornarCheques(Integer idCheque) {
+        //return List.of(new Cheque());
+        return ChequeRepository.cheques(idCheque);
     }
 
-    public Cheque cheque(Integer idCheque) {
+    public Cheque retornarCheque(Integer idCheque) {
         return ChequeRepository.findById(idCheque).get();
     }
 

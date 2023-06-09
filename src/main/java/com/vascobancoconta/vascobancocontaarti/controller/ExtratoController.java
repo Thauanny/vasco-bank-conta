@@ -20,6 +20,7 @@ public class ExtratoController {
     @GetMapping("/{intervalo}")
     public ResponseEntity<?> extratoDia(@PathVariable Integer idConta, @PathVariable INTERVALO intervalo) {
         try {
+            //verfificar se existe conta
             switch (intervalo) {
                 case DIA:
                     return ResponseEntity.ok(extratoService.extratoDia(idConta));
