@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.vascobancoconta.vascobancocontaarti.models.Conta;
+import com.vascobancoconta.vascobancocontaarti.models.DTO.ChaveDTO;
+import com.vascobancoconta.vascobancocontaarti.models.DTO.SaldoDTO;
 import com.vascobancoconta.vascobancocontaarti.service.ContaService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,11 +27,11 @@ public class ContaController {
     @PostMapping("/{idUser}")
     public ResponseEntity<?> cadastrarConta(@PathVariable Integer idUser, @RequestBody Conta conta) {
         try {
-            //verificar se existe user
+            // verificar se existe user
             conta.setIdUser(idUser);
             return ResponseEntity.ok(contaService.cadastrarConta(conta));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
 
@@ -43,7 +45,7 @@ public class ContaController {
                         .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
             return ResponseEntity.ok(contaService.atualizarConta(conta));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
 
@@ -53,11 +55,11 @@ public class ContaController {
     public ResponseEntity<?> conta(@PathVariable Integer idConta) {
         try {
             if (contaService.retornarConta(idConta) == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
             return ResponseEntity.ok(contaService.retornarConta(idConta));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
 
@@ -67,12 +69,12 @@ public class ContaController {
     public ResponseEntity<?> deleteConta(@PathVariable Integer idConta) {
         try {
             if (contaService.retornarConta(idConta) == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
             contaService.deleteConta(idConta);
             return ResponseEntity.ok("{\"message\": \"Conta excluida\"}");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
 
@@ -82,25 +84,60 @@ public class ContaController {
     public ResponseEntity<?> saldo(@PathVariable Integer idConta) {
         try {
             if (contaService.retornarConta(idConta) == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
             return ResponseEntity.ok("{\"valor\":" + contaService.saldo(idConta) + "}");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
 
     }
 
     @PutMapping("/saldo/{idConta}")
-    public ResponseEntity<?> saldo(@PathVariable Integer idConta, @RequestBody double saldo) {
+    public ResponseEntity<?> saldo(@PathVariable Integer idConta, @RequestBody SaldoDTO saldo) {
         try {
             if (contaService.retornarConta(idConta) == null)
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
-            return ResponseEntity.ok("{\"valor\":" + contaService.atualizarSaldo(idConta, saldo).getSaldo() + "}");
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
+            return ResponseEntity
+                    .ok("{\"valor\":" + contaService.atualizarSaldo(idConta, saldo.getSaldo()).getSaldo() + "}");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\": \"Nao foi possivel concluir\"}");
+        }
+    }
+
+    @GetMapping("/pix/{idConta}/{chave}")
+    public ResponseEntity<?> retornarContaChavePix(@PathVariable Integer idConta, @PathVariable String chave) {
+        try {
+
+            if (contaService.retornarConta(idConta) == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
+            Conta conta = contaService.retornarContaChavePix(chave, idConta);
+            if (conta == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Chave nao encontrado\"}");
+
+            return ResponseEntity.ok(conta);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\": \"Nao foi possivel concluir\"}");
+        }
+    }
+
+    @PostMapping("/pix/{idConta}")
+    public ResponseEntity<?> cadastrarChavePix(@PathVariable Integer idConta, @RequestBody ChaveDTO chave) {
+        try {
+            Conta conta = contaService.retornarConta(idConta);
+            if (conta == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
+
+            return ResponseEntity.ok(contaService.cadastrarChavePix(chave.getChave(), idConta));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
     }

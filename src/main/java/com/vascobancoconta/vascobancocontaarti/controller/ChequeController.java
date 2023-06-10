@@ -88,7 +88,7 @@ public class ChequeController {
                         .body("{\"status\": \"404 \", message\": \"Cheque nao encontrado\"}");
             return ResponseEntity.ok(chequeService.atualizarlimite(cheque));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
     }
@@ -101,7 +101,7 @@ public class ChequeController {
                         .body("{\"status\": \"404 \", message\": \"Cheque nao encontrado\"}");
             return ResponseEntity.ok("{\"valor\":" + chequeService.limite(idCheque) + "}");
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
     }
@@ -114,7 +114,7 @@ public class ChequeController {
                         .body("{\"status\": \"404 \", message\": \"Cheque nao encontrado\"}");
             return ResponseEntity.ok(chequeService.atualizarJuros(cheque));
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
         }
     }

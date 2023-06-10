@@ -34,6 +34,16 @@ public class ContaService {
         return contaRepository.retornarConta(userId);
     }
 
+    public Conta retornarContaChavePix(String chave, Integer idConta) {
+        return contaRepository.retornarContaChavePix(chave, idConta);
+    }
+
+    public Conta cadastrarChavePix(String chave, Integer idConta) {
+        Conta conta = retornarConta(idConta);
+        conta.setChavePix(chave);
+        return contaRepository.save(conta);
+    }
+
     public void deleteConta(Integer idConta) {
         contaRepository.deleteById(idConta);
     }

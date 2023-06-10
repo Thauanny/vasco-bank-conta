@@ -50,5 +50,7 @@ public class Conta {
     private boolean elegivelCredito;
     @Column(name = "saldo")
     private double saldo;
+    @Column(name = "chave_pix")
+    private String ChavePix;
 
 }
