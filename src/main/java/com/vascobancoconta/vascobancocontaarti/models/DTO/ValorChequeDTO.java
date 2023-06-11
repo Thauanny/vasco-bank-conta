@@ -9,7 +9,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ChaveDTO {
-    Integer idConta;
-    String chave;
+public class ValorChequeDTO {
+    Integer idCheque;
+    double valor;
 }

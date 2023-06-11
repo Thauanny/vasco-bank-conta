@@ -100,14 +100,15 @@ public class ContaController {
 
     }
 
-    @PutMapping("/saldo/{idConta}")
-    public ResponseEntity<?> saldo(@PathVariable Integer idConta, @RequestBody SaldoDTO saldo) {
+    @PutMapping("/saldo")
+    public ResponseEntity<?> saldo(@RequestBody SaldoDTO saldo) {
         try {
-            if (contaService.retornarConta(idConta) == null)
+            Conta conta = contaService.retornarConta(saldo.getIdConta());
+            if (conta == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
             return ResponseEntity
-                    .ok("{\"valor\":" + contaService.atualizarSaldo(idConta, saldo.getSaldo()).getSaldo() + "}");
+                    .ok("{\"valor\":" + contaService.atualizarSaldo(conta, saldo.getSaldo()).getSaldo() + "}");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
@@ -133,15 +134,15 @@ public class ContaController {
         }
     }
 
-    @PostMapping("/pix/{idConta}")
-    public ResponseEntity<?> cadastrarChavePix(@PathVariable Integer idConta, @RequestBody ChaveDTO chave) {
+    @PostMapping("/pix")
+    public ResponseEntity<?> cadastrarChavePix(@RequestBody ChaveDTO chave) {
         try {
-            Conta conta = contaService.retornarConta(idConta);
+            Conta conta = contaService.retornarConta(chave.getIdConta());
             if (conta == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
 
-            return ResponseEntity.ok(contaService.cadastrarChavePix(chave.getChave(), idConta));
+            return ResponseEntity.ok(contaService.cadastrarChavePix(chave.getChave(), conta));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");

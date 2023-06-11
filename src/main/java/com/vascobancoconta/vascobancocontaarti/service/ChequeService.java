@@ -18,7 +18,7 @@ public class ChequeService {
     }
 
     public List<Cheque> retornarCheques(Integer idCheque) {
-        //return List.of(new Cheque());
+        // return List.of(new Cheque());
         return ChequeRepository.cheques(idCheque);
     }
 
@@ -30,19 +30,17 @@ public class ChequeService {
         return ChequeRepository.findById(idCheque).get().getLimite();
     }
 
-    public Cheque atualizarlimite(Cheque cheque) {
-        Cheque _cheque = ChequeRepository.findById(cheque.getId()).get();
-        _cheque.setLimite(cheque.getLimite());
-        return _cheque;
+    public Cheque atualizarlimite(Cheque cheque, double valor) {
+        cheque.setLimite(valor);
+        return cadastrarCheque(cheque);
     }
 
     public double juros(Cheque cheque) {
         return ChequeRepository.findById(cheque.getId()).get().getJuros();
     }
 
-    public Cheque atualizarJuros(Cheque cheque) {
-        Cheque _cheque = ChequeRepository.findById(cheque.getId()).get();
-        _cheque.setJuros(cheque.getJuros());
-        return _cheque;
+    public Cheque atualizarJuros(Cheque cheque, double valor) {
+        cheque.setJuros(valor);
+        return cadastrarCheque(cheque);
     }
 }

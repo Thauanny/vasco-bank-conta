@@ -38,10 +38,9 @@ public class ContaService {
         return contaRepository.retornarContaChavePix(chave, idConta);
     }
 
-    public Conta cadastrarChavePix(String chave, Integer idConta) {
-        Conta conta = retornarConta(idConta);
+    public Conta cadastrarChavePix(String chave, Conta conta) {
         conta.setChavePix(chave);
-        return contaRepository.save(conta);
+        return cadastrarConta(conta);
     }
 
     public void deleteConta(Integer idConta) {
@@ -52,11 +51,9 @@ public class ContaService {
         return contaRepository.findById(idConta).get().getSaldo();
     }
 
-    public Conta atualizarSaldo(Integer idConta, double saldo) {
-
-        Conta _conta = contaRepository.findById(idConta).get();
-        _conta.setSaldo(saldo);
-        return contaRepository.save(_conta);
+    public Conta atualizarSaldo(Conta conta, double saldo) {
+        conta.setSaldo(saldo);
+        return cadastrarConta(conta);
     }
 
 }

@@ -186,32 +186,24 @@ paths:
                 $ref: '#/components/schemas/saldo'
         '405':
           description: Invalid input
-          
+  /contaCorrente/saldo:         
     put:
       tags:
         - contaCorrente
       summary: Atualiza o saldo da conta
       description: Place a new order in the store
       operationId: putSaldosaldo
-      parameters:
-        - name: idConta
-          in: path
-          description: ID do usuario
-          required: true
-          schema:
-            type: integer
-            format: int64
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/saldo'
+              $ref: '#/components/schemas/saldoDTO'
           application/xml:
             schema:
-              $ref: '#/components/schemas/saldo'
+              $ref: '#/components/schemas/saldoDTO'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/saldo'
+              $ref: '#/components/schemas/saldoDTO'
         required: true
       responses:
         '200':
@@ -223,7 +215,7 @@ paths:
         '405':
           description: Invalid input
           
-  /contaCorrente/cheque/{idConta}:
+  /cheque/{idConta}:
     post:
       tags:
         - contaCorrente
@@ -267,7 +259,7 @@ paths:
       security:
         - api_key: []
         
-  /contaCorrente/cheque/{idCheque}:
+  /cheque/{idCheque}:
     get:
       tags:
         - contaCorrente
@@ -299,7 +291,7 @@ paths:
       security:
         - api_key: []
         
-  /contaCorrente/cheque/all/{idConta}:
+  /cheque/all/{idConta}:
     get:
       tags:
         - contaCorrente
@@ -332,7 +324,7 @@ paths:
       security:
         - api_key: []
           
-  /contaCorrente/cheque/{idCheque}/limite:
+  /cheque/limite/{idCheque}:
     get:
       tags:
         - contaCorrente
@@ -356,31 +348,25 @@ paths:
                 $ref: '#/components/schemas/saldo'
         '405':
           description: Invalid input
+          
+  /cheque/limite:
     put:
       tags:
         - contaCorrente
       summary: Atualiza o limite do cheque da conta
       description: Place a new order in the store
-      operationId: chequepust
-      parameters:
-        - name: idCheque
-          in: path
-          description: ID do usuario
-          required: true
-          schema:
-            type: integer
-            format: int64
+      operationId: chequeput
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/cheque'
+              $ref: '#/components/schemas/ValorChequeDTO'
           application/xml:
             schema:
               $ref: '#/components/schemas/cheque'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/cheque'
+              $ref: '#/components/schemas/ValorChequeDTO'
         required: true
       responses:
         '200':
@@ -392,7 +378,7 @@ paths:
         '405':
           description: Invalid input
           
-  /contaCorrente/cheque/{idCheque}/juros:
+  /cheque/juros/{idCheque}:
     get:
       tags:
         - contaCorrente
@@ -417,32 +403,24 @@ paths:
         '405':
           description: Invalid input
           
-
+  /cheque/juros:
     put:
       tags:
         - contaCorrente
       summary: Atualiza os juros do cheque da conta
       description: Place a new order in the store
-      operationId: chequeput
-      parameters:
-        - name: idCheque
-          in: path
-          description: ID do usuario
-          required: true
-          schema:
-            type: integer
-            format: int64
+      operationId: jurosput
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/saldo'
+              $ref: '#/components/schemas/ValorChequeDTO'
           application/xml:
             schema:
-              $ref: '#/components/schemas/saldo'
+              $ref: '#/components/schemas/ValorChequeDTO'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/saldo'
+              $ref: '#/components/schemas/ValorChequeDTO'
         required: true
       responses:
         '200':
@@ -450,49 +428,10 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/saldo'
+                $ref: '#/components/schemas/cheque'
         '405':
           description: Invalid input
           
-  /contaCorrente/extrato/{idConta}/{intervalo}:
-    get:
-      tags:
-        - contaCorrente
-      summary: retorna o extrato da conta
-      operationId: getOrderById
-      parameters:
-        - name: idConta
-          in: path
-          description: ID da conta
-          required: true
-          schema:
-            type: integer
-            format: int64
-        - name: intervalo
-          in: path
-          description: enum para intervalo entre os extratos
-          required: true
-          schema:
-            type: string
-            enum:
-              - DIA
-              - MES
-              - ANO
-         
-      responses:
-        '200':
-          description: successful operation
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/extrato'          
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/extrato'
-        '400':
-          description: Invalid ID supplied
-        '404':
-          description: Order not found
           
           
   /contaCorrente/pix/{idConta}/{chave}:
@@ -530,20 +469,12 @@ paths:
         '404':
           description: Order not found
           
-  /contaCorrente/pix/{idConta}:        
+  /contaCorrente/pix:        
     post:
       tags:
         - contaCorrente
       summary: cadastra chave pix
       operationId: postOrderById
-      parameters:
-        - name: idConta
-          in: path
-          description: ID da conta
-          required: true
-          schema:
-            type: integer
-            format: int64
       requestBody:
         content:
           application/json:
@@ -720,6 +651,9 @@ components:
     chave:
       type: object
       properties:
+        idConta:
+          type: number
+          example: 1
         chave:
           type: string
           example: "askdasjkds"
@@ -736,25 +670,32 @@ components:
       xml:
         name: saldo
         
-    extrato:
+    saldoDTO:
       type: object
       properties:
-        id:
-          type: integer
+        idConta:
+          type: number
           format: int64
-          example: 10
-        dataOperacao:
-          type: string
-          example: "2023-06-06"
-        operacao:
-          type: string
-          enum:
-            - PIX
-            - BOLETO
-            - INTRABANCO
-            - PAGCARTAO
+          example: 1
+        valor:
+          type: number
+          format: int64
+          example: 99.999
       xml:
-        name: extrato
+        name: saldoDTO
+    ValorChequeDTO:
+      type: object
+      properties:
+        idCheque:
+          type: number
+          format: int64
+          example: 1
+        valor:
+          type: number
+          format: int64
+          example: 99.999
+      xml:
+        name: ValorChequeDTO
         
    
   securitySchemes:
