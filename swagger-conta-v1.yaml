@@ -53,8 +53,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: conta not found
-      security:
-        - api_key: []
         
     put:
       tags:
@@ -96,8 +94,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: conta not found
-      security:
-        - api_key: []
 
     get:
       tags:
@@ -127,8 +123,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: conta not found
-      security:
-        - api_key: []
         
     delete:
       tags:
@@ -158,8 +152,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: conta not found
-      security:
-        - api_key: []
         
   /contaCorrente/saldo/{idConta}:
     get:
@@ -256,8 +248,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: conta not found
-      security:
-        - api_key: []
         
   /cheque/{idCheque}:
     get:
@@ -288,8 +278,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: conta not found
-      security:
-        - api_key: []
         
   /cheque/all/{idConta}:
     get:
@@ -321,8 +309,6 @@ paths:
           description: Invalid ID supplied
         '404':
           description: conta not found
-      security:
-        - api_key: []
           
   /cheque/limite/{idCheque}:
     get:
