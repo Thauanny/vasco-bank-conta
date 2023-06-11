@@ -9,7 +9,7 @@ import com.vascobancoconta.vascobancocontaarti.models.Conta;
 
 @Repository
 public interface ContaRepository extends JpaRepository<Conta, Integer> {
-    @Query(value = "SELECT * FROM CONTA WHERE user_id = :userId",  nativeQuery = true)
+    @Query(value = "SELECT * FROM CONTA WHERE user_id = :userId LIMIT 1",  nativeQuery = true)
     public Conta retornarConta(@Param("userId") Integer userId);
 
     @Query(value = "SELECT * FROM CONTA WHERE chave_pix = :chave AND conta_id = :idConta",  nativeQuery = true)

@@ -28,8 +28,13 @@ public class ContaController {
     public ResponseEntity<?> cadastrarConta(@PathVariable Integer idUser, @RequestBody Conta conta) {
         try {
             // verificar se existe user
+            if (contaService.retornarConta(idUser) != null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("{\"message\": \"usuario ja possui conta cadastrada\"}");
+
             conta.setIdUser(idUser);
             return ResponseEntity.ok(contaService.cadastrarConta(conta));
+
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
@@ -51,13 +56,14 @@ public class ContaController {
 
     }
 
-    @GetMapping("/{idConta}")
-    public ResponseEntity<?> conta(@PathVariable Integer idConta) {
+    @GetMapping("/{idUser}")
+    public ResponseEntity<?> conta(@PathVariable Integer idUser) {
         try {
-            if (contaService.retornarConta(idConta) == null)
+            Conta conta = contaService.retornarConta(idUser);
+            if (conta == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
-            return ResponseEntity.ok(contaService.retornarConta(idConta));
+            return ResponseEntity.ok(conta);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("{\"message\": \"Nao foi possivel concluir\"}");
