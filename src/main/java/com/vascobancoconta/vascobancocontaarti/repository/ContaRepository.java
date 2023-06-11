@@ -12,8 +12,11 @@ public interface ContaRepository extends JpaRepository<Conta, Integer> {
     @Query(value = "SELECT * FROM CONTA WHERE user_id = :userId LIMIT 1",  nativeQuery = true)
     public Conta retornarConta(@Param("userId") Integer userId);
 
-    @Query(value = "SELECT * FROM CONTA WHERE chave_pix = :chave AND conta_id = :idConta",  nativeQuery = true)
-    public Conta retornarContaChavePix(@Param("chave") String chave, @Param("idConta") Integer idConta);
+    @Query(value = "SELECT * FROM CONTA WHERE chave_pix = :chave_pix LIMIT 1",  nativeQuery = true)
+    public Conta buscarChaves(@Param("chave") String chave);
+
+    @Query(value = "SELECT * FROM CONTA WHERE chave_pix = :chave",  nativeQuery = true)
+    public Conta retornarContaChavePix(@Param("chave") String chave);
 
 
 

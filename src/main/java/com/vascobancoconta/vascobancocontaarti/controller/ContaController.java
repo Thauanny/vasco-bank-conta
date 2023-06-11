@@ -115,17 +115,13 @@ public class ContaController {
         }
     }
 
-    @GetMapping("/pix/{idConta}/{chave}")
-    public ResponseEntity<?> retornarContaChavePix(@PathVariable Integer idConta, @PathVariable String chave) {
+    @GetMapping("/pix/{chave}")
+    public ResponseEntity<?> retornarContaChavePix(@PathVariable String chave) {
         try {
-
-            if (contaService.retornarConta(idConta) == null)
-                return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
-            Conta conta = contaService.retornarContaChavePix(chave, idConta);
+            Conta conta = contaService.retornarContaChavePix(chave);
             if (conta == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                        .body("{\"status\": \"404 \", message\": \"Chave nao encontrado\"}");
+                        .body("{\"status\": \"404 \", message\": \"Conta com chave nao encontrado\"}");
 
             return ResponseEntity.ok(conta);
         } catch (Exception e) {
@@ -141,7 +137,9 @@ public class ContaController {
             if (conta == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
-
+            if (contaService.buscarChaves(chave.getChave()) != null)
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                        .body("{\"status\": \"400 \", message\": \"cadastre uma chave unica\"}");
             return ResponseEntity.ok(contaService.cadastrarChavePix(chave.getChave(), conta));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

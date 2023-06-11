@@ -434,20 +434,13 @@ paths:
           
           
           
-  /contaCorrente/pix/{idConta}/{chave}:
+  /contaCorrente/pix/{chave}:
     get:
       tags:
         - contaCorrente
       summary: retorna a conta pela chave pix
       operationId: getPix
       parameters:
-        - name: idConta
-          in: path
-          description: ID da conta
-          required: true
-          schema:
-            type: integer
-            format: int64
         - name: chave
           in: path
           description: chavepix
@@ -697,17 +690,4 @@ components:
       xml:
         name: ValorChequeDTO
         
-   
-  securitySchemes:
-    petstore_auth:
-      type: oauth2
-      flows:
-        implicit:
-          authorizationUrl: https://vasco-bank-conta/api/v1/oauth/authorize
-          scopes:
-            write:pets: modify pets in your account
-            read:pets: read your pets
-    api_key:
-      type: apiKey
-      name: api_key
-      in: header
+
