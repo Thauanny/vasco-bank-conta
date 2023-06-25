@@ -2,11 +2,30 @@ version: "3.1"
 
 services:
 
-  db:
+  db_conta:
     container_name: conta
     image: postgres:14.2-alpine
     restart: always
     environment:
       POSTGRES_PASSWORD: example
+      DB_PORT: 5432
     ports:
       - "5432:5432"
+  db_cartao:
+    container_name: cartao
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+      DB_PORT: 5433
+    ports:
+      - "5433:5433"
+  db_pagamento:
+    container_name: pagamento
+    image: postgres:14.2-alpine
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+      DB_PORT: 5434
+    ports:
+      - "5434:5434"
