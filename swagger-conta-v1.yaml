@@ -163,7 +163,7 @@ paths:
       parameters:
         - name: idConta
           in: path
-          description: ID do usuario
+          description: ID da conta
           required: true
           schema:
             type: integer
@@ -175,7 +175,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/saldo'
+                $ref: '#/components/schemas/contaCorrente'
         '405':
           description: Invalid input
         
