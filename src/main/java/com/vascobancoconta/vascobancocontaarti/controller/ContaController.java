@@ -27,7 +27,7 @@ public class ContaController {
     @PostMapping("/{idUser}")
     public ResponseEntity<?> cadastrarConta(@PathVariable Integer idUser, @RequestBody Conta conta) {
         try {
-            // verificar se existe user
+            
             if (contaService.retornarConta(idUser) != null)
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                         .body("{\"message\": \"usuario ja possui conta cadastrada\"}");
@@ -60,6 +60,21 @@ public class ContaController {
     public ResponseEntity<?> conta(@PathVariable Integer idUser) {
         try {
             Conta conta = contaService.retornarConta(idUser);
+            if (conta == null)
+                return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                        .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");
+            return ResponseEntity.ok(conta);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("{\"message\": \"Nao foi possivel concluir\"}");
+        }
+
+    }
+
+    @GetMapping("/{idConta}")
+    public ResponseEntity<?> contaById(@PathVariable Integer idConta) {
+        try {
+            Conta conta = contaService.retornarContaById(idConta);
             if (conta == null)
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body("{\"status\": \"404 \", message\": \"Conta nao encontrado\"}");

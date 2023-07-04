@@ -34,6 +34,10 @@ public class ContaService {
         return contaRepository.retornarConta(userId);
     }
 
+    public Conta retornarContaById(Integer userId) {
+        return contaRepository.findById(userId).get();
+    }
+
     public Conta retornarContaChavePix(String chave) {
         return contaRepository.retornarContaChavePix(chave);
     }
