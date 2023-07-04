@@ -53,4 +53,9 @@ public class Conta {
     @Column(name = "chave_pix")
     private String ChavePix;
 
+
+   public static Conta contaBanco(){
+    
+       return new Conta(1, 1, "Vasco Bank", "", "001", "2321", 9, "2321-9", "12312312323", "Banco", true, 999999.99, "sldaksjdaksdksksd");
+    }
 }
